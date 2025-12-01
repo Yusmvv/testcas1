@@ -34,6 +34,11 @@
             --success: #00D4AA;
             --warning: #FFB800;
             --error: #FF4757;
+            --border-radius: 12px;
+            --border-radius-sm: 8px;
+            --container-padding: 20px;
+            --section-padding: 60px 0;
+            --mobile-section-padding: 40px 0;
         }
         
         body {
@@ -49,15 +54,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .wide-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 var(--container-padding);
             position: relative;
             z-index: 2;
         }
@@ -98,7 +95,7 @@
         
         /* Шапка сайта */
         .header {
-            background: rgba(10, 10, 15, 0.9);
+            background: rgba(10, 10, 15, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: fixed;
@@ -106,7 +103,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            padding: 12px 0;
+            padding: 15px 0;
         }
         
         .header-content {
@@ -135,15 +132,49 @@
             font-weight: 500;
             transition: color 0.3s ease;
             font-size: 14px;
+            white-space: nowrap;
         }
         
         .nav-link:hover {
             color: var(--accent);
         }
         
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 15, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            z-index: 999;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            flex-direction: column;
+            gap: 15px;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-nav.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
         /* Общие стили секций */
         .section {
-            padding: 50px 0;
+            padding: var(--section-padding);
         }
         
         .section-header {
@@ -178,7 +209,7 @@
         
         /* Герой-блок */
         .hero {
-            padding: 120px 0 50px;
+            padding: 140px 0 50px;
             text-align: center;
             position: relative;
         }
@@ -225,14 +256,14 @@
             align-items: center;
             gap: 8px;
             padding: 12px 16px;
-            border-radius: 10px;
+            border-radius: var(--border-radius-sm);
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 14px;
             font-weight: 500;
             color: var(--text-primary);
             transition: all 0.3s ease;
-            justify-content: flex-start;
+            justify-content: center;
         }
         
         .capsule:hover {
@@ -254,7 +285,7 @@
         /* Конструктор выгоды */
         .benefit-constructor {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: var(--border-radius);
             padding: 40px 30px;
             margin-bottom: 30px;
             box-shadow: var(--shadow);
@@ -312,6 +343,7 @@
             font-size: 13px;
             font-weight: 600;
             color: var(--text-secondary);
+            flex-shrink: 0;
         }
         
         .step-number.active {
@@ -335,7 +367,7 @@
         .option-card {
             padding: 18px 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             background: rgba(255, 255, 255, 0.03);
             cursor: pointer;
             transition: all 0.3s ease;
@@ -378,6 +410,8 @@
             display: flex;
             justify-content: space-between;
             margin-top: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         
         .deposit-value {
@@ -385,18 +419,20 @@
             color: var(--text-secondary);
             cursor: pointer;
             padding: 8px 12px;
-            border-radius: 8px;
+            border-radius: var(--border-radius-sm);
             transition: all 0.2s ease;
             text-align: center;
             flex: 1;
-            max-width: 100px;
-            margin: 0 4px;
+            min-width: 80px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
         }
         
         .deposit-value.active {
             background-color: rgba(0, 212, 255, 0.1);
             color: var(--accent);
             font-weight: 600;
+            border-color: var(--accent);
         }
         
         .deposit-hint {
@@ -406,6 +442,7 @@
             color: var(--accent);
             font-weight: 500;
             min-height: 20px;
+            padding: 0 10px;
         }
         
         /* Иконки игр */
@@ -421,7 +458,7 @@
             align-items: center;
             cursor: pointer;
             padding: 20px 16px;
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
             background: rgba(255, 255, 255, 0.03);
@@ -468,6 +505,7 @@
             color: var(--text-secondary);
             font-style: italic;
             min-height: 20px;
+            padding: 0 10px;
         }
         
         .find-button {
@@ -477,12 +515,14 @@
             background: var(--gradient);
             color: var(--text-primary);
             border: none;
-            border-radius: 8px;
+            border-radius: var(--border-radius-sm);
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+            width: 100%;
+            max-width: 300px;
         }
         
         .find-button:hover {
@@ -508,8 +548,8 @@
         
         .trust-card {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: var(--border-radius-sm);
+            padding: 25px 20px;
             text-align: center;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -529,7 +569,7 @@
             justify-content: center;
             font-size: 18px;
             background: var(--gradient);
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             color: var(--text-primary);
         }
         
@@ -557,7 +597,7 @@
         
         .info-card {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             padding: 25px 20px;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -608,7 +648,7 @@
         
         .faq-item {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             margin-bottom: 10px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             overflow: hidden;
@@ -647,6 +687,8 @@
         
         .faq-icon {
             transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 10px;
         }
         
         .faq-item.active .faq-icon {
@@ -661,13 +703,16 @@
         }
         
         .reviews-container {
-            display: flex;
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 100%;
             gap: 16px;
             overflow-x: auto;
             padding: 10px 5px 25px;
             scroll-behavior: smooth;
             scrollbar-width: none;
             scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
         }
         
         .reviews-container::-webkit-scrollbar {
@@ -675,16 +720,14 @@
         }
         
         .review-card {
-            min-width: 100%;
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             padding: 20px;
             box-shadow: var(--card-shadow);
             display: flex;
             flex-direction: column;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            flex-shrink: 0;
             scroll-snap-align: start;
         }
         
@@ -698,6 +741,8 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         .reviewer {
@@ -717,6 +762,7 @@
             font-weight: 600;
             color: var(--text-primary);
             font-size: 13px;
+            flex-shrink: 0;
         }
         
         .reviewer-info {
@@ -763,7 +809,7 @@
         
         .legal-card {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             padding: 20px;
             text-align: center;
             transition: all 0.3s ease;
@@ -784,7 +830,7 @@
             justify-content: center;
             font-size: 18px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             color: var(--text-primary);
         }
         
@@ -810,7 +856,7 @@
         
         .footer-content {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-template-columns: repeat(4, 1fr);
             gap: 30px;
             margin-bottom: 30px;
         }
@@ -907,6 +953,7 @@
             transition: all 0.3s ease;
             z-index: 10;
             box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+            display: none;
         }
         
         .carousel-btn:hover {
@@ -952,12 +999,15 @@
         }
         
         .cards-container {
-            display: flex;
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 100%;
             gap: 16px;
             overflow-x: auto;
             padding: 8px 0 20px;
             scroll-behavior: smooth;
             scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
         }
         
         .cards-container::-webkit-scrollbar {
@@ -965,9 +1015,8 @@
         }
         
         .card {
-            min-width: 100%;
             background: var(--card-bg);
-            border-radius: 14px;
+            border-radius: var(--border-radius-sm);
             padding: 20px;
             box-shadow: var(--card-shadow);
             display: flex;
@@ -976,7 +1025,6 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             position: relative;
-            flex-shrink: 0;
             scroll-snap-align: start;
         }
         
@@ -991,6 +1039,26 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .casino-logo {
+            font-size: 18px;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .badge {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(0, 212, 255, 0.3);
         }
         
         .card-date {
@@ -1011,6 +1079,7 @@
         
         .card-benefits {
             margin-bottom: 18px;
+            flex-grow: 1;
         }
         
         .card-benefit {
@@ -1025,6 +1094,7 @@
         .card-benefit i {
             color: var(--success);
             font-size: 11px;
+            flex-shrink: 0;
         }
         
         .card-button {
@@ -1033,7 +1103,7 @@
             background: var(--gradient);
             color: var(--text-primary);
             border: none;
-            border-radius: 8px;
+            border-radius: var(--border-radius-sm);
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
@@ -1057,7 +1127,22 @@
             animation: fadeIn 0.5s ease forwards;
         }
         
-        /* Адаптивность */
+        /* Показать кнопки карусели только на больших экранах */
+        @media (min-width: 768px) {
+            .carousel-btn {
+                display: flex;
+            }
+            
+            .reviews-container {
+                grid-auto-columns: calc(50% - 8px);
+            }
+            
+            .cards-container {
+                grid-auto-columns: calc(50% - 8px);
+            }
+        }
+        
+        /* Адаптивность для планшетов */
         @media (max-width: 1200px) {
             .section-title, .results-title {
                 font-size: 28px;
@@ -1067,21 +1152,9 @@
                 font-size: 36px;
             }
             
-            .carousel-btn.prev {
-                left: 10px;
-            }
-            
-            .carousel-btn.next {
-                right: 10px;
-            }
-            
             .footer-content {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 30px;
-            }
-            
-            .wide-container, .container {
-                max-width: 1000px;
             }
         }
         
@@ -1107,15 +1180,24 @@
             .info-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .carousel-btn.prev {
+                left: 10px;
+            }
+            
+            .carousel-btn.next {
+                right: 10px;
+            }
         }
         
+        /* Адаптивность для мобильных устройств и планшетов */
         @media (max-width: 768px) {
             .section {
-                padding: 40px 0;
+                padding: var(--mobile-section-padding);
             }
             
             .hero {
-                padding: 100px 0 40px;
+                padding: 120px 0 40px;
             }
             
             .hero-title {
@@ -1129,23 +1211,26 @@
             }
             
             .capsules {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
                 margin-bottom: 30px;
             }
             
             .capsule {
-                padding: 10px 14px;
+                padding: 10px 12px;
                 font-size: 13px;
+                justify-content: flex-start;
             }
             
             .benefit-constructor {
                 padding: 30px 20px;
-                max-width: 100%;
                 margin-bottom: 30px;
+                border-radius: var(--border-radius-sm);
             }
             
             .constructor-title {
                 font-size: 24px;
+                margin-bottom: 20px;
             }
             
             .games-options {
@@ -1161,18 +1246,39 @@
                 font-size: 24px;
             }
             
-            .carousel-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 14px;
+            .nav {
+                display: none;
             }
             
-            .carousel-btn.prev {
-                left: 5px;
+            .mobile-menu-btn {
+                display: block;
             }
             
-            .carousel-btn.next {
-                right: 5px;
+            .step-header {
+                flex-wrap: wrap;
+            }
+            
+            .step-title {
+                font-size: 16px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-card {
+                padding: 16px 14px;
+            }
+            
+            .deposit-values {
+                justify-content: center;
+            }
+            
+            .deposit-value {
+                flex: 0 0 calc(33.333% - 8px);
+                min-width: 0;
+                font-size: 12px;
+                padding: 8px 6px;
             }
             
             .footer-content {
@@ -1182,17 +1288,62 @@
             
             .info-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
             
-            .options-grid {
+            .info-card {
+                padding: 20px 15px;
+            }
+            
+            .trust-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
             
-            .nav {
-                display: none;
+            .legal-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .reviews-container {
+                padding: 10px 0 25px;
+            }
+            
+            .cards-container {
+                padding: 10px 0 20px;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .footer-heading {
+                margin-bottom: 10px;
+            }
+            
+            .footer-links {
+                gap: 6px;
+            }
+            
+            .footer-bottom {
+                font-size: 11px;
+            }
+            
+            .faq-question {
+                padding: 14px 16px;
+                font-size: 14px;
+            }
+            
+            .faq-answer {
+                padding: 0 16px;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 0 16px 14px;
             }
         }
         
+        /* Адаптивность для маленьких мобильных устройств */
         @media (max-width: 480px) {
             .hero-title {
                 font-size: 26px;
@@ -1205,11 +1356,13 @@
             
             .capsules {
                 grid-template-columns: 1fr;
+                max-width: 280px;
+                margin-left: auto;
+                margin-right: auto;
             }
             
             .capsule {
                 width: 100%;
-                max-width: 250px;
                 text-align: left;
                 margin: 0 auto;
             }
@@ -1218,20 +1371,188 @@
                 font-size: 22px;
             }
             
+            .section-subtitle {
+                font-size: 12px;
+            }
+            
+            .benefit-constructor {
+                padding: 25px 15px;
+            }
+            
+            .step {
+                margin-bottom: 20px;
+            }
+            
             .deposit-values {
-                flex-wrap: wrap;
-                justify-content: center;
+                gap: 6px;
             }
             
             .deposit-value {
-                flex: 0 0 calc(50% - 8px);
-                margin-bottom: 8px;
-                font-size: 12px;
-                padding: 6px 10px;
+                flex: 0 0 calc(50% - 6px);
+                font-size: 11px;
+                padding: 8px 4px;
             }
             
-            .trust-grid, .legal-grid {
+            .games-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .game-option {
+                padding: 14px 10px;
+                min-height: 80px;
+            }
+            
+            .game-label {
+                font-size: 13px;
+            }
+            
+            .find-button {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+            
+            .info-card {
+                padding: 18px 12px;
+            }
+            
+            .info-title {
+                font-size: 16px;
+            }
+            
+            .info-description {
+                font-size: 13px;
+            }
+            
+            .trust-card {
+                padding: 20px 15px;
+            }
+            
+            .trust-title {
+                font-size: 15px;
+            }
+            
+            .review-card {
+                padding: 15px;
+            }
+            
+            .review-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .review-stars {
+                align-self: flex-start;
+            }
+            
+            .footer {
+                padding: 30px 0 15px;
+            }
+            
+            .footer-content {
+                gap: 20px;
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+            
+            .social-link {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+        }
+        
+        /* Адаптивность для очень маленьких экранов */
+        @media (max-width: 360px) {
+            .hero-title {
+                font-size: 24px;
+            }
+            
+            .section-title, .results-title {
+                font-size: 20px;
+            }
+            
+            .capsule {
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+            
+            .capsule-icon {
+                width: 16px;
+                height: 16px;
+                font-size: 10px;
+            }
+            
+            .deposit-value {
+                font-size: 10px;
+                padding: 6px 3px;
+            }
+            
+            .games-options {
                 grid-template-columns: 1fr;
+            }
+            
+            .option-title {
+                font-size: 14px;
+            }
+            
+            .option-description {
+                font-size: 11px;
+            }
+            
+            .card-button {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+        
+        /* Поддержка горизонтальной ориентации на мобильных */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero {
+                padding: 100px 0 30px;
+            }
+            
+            .hero-title {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .hero-description {
+                margin-bottom: 20px;
+                font-size: 12px;
+            }
+            
+            .capsules {
+                grid-template-columns: repeat(4, 1fr);
+                margin-bottom: 20px;
+            }
+            
+            .section {
+                padding: 30px 0;
+            }
+        }
+        
+        /* Улучшение для устройств с высокой плотностью пикселей */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .header {
+                backdrop-filter: blur(20px);
+            }
+            
+            .mobile-nav {
+                backdrop-filter: blur(30px);
+            }
+            
+            .benefit-constructor {
+                backdrop-filter: blur(20px);
+            }
+            
+            .card {
+                backdrop-filter: blur(20px);
             }
         }
     </style>
@@ -1250,8 +1571,19 @@
                     <a href="#faq" class="nav-link">FAQ</a>
                     <a href="#reviews" class="nav-link">Отзывы</a>
                 </nav>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
+        <nav class="mobile-nav" id="mobileNav">
+            <a href="#hero" class="nav-link">Главная</a>
+            <a href="#constructor" class="nav-link">Подбор бонусов</a>
+            <a href="#trust" class="nav-link">О нас</a>
+            <a href="#info" class="nav-link">Как это работает</a>
+            <a href="#faq" class="nav-link">FAQ</a>
+            <a href="#reviews" class="nav-link">Отзывы</a>
+        </nav>
     </header>
 
     <!-- Фоновые элементы -->
@@ -1260,7 +1592,7 @@
         <div class="bg-circle circle-2"></div>
     </div>
     
-    <div class="wide-container">
+    <div class="container">
         <!-- Герой-блок -->
         <section class="hero" id="hero">
             <div class="section-header">
@@ -1782,6 +2114,31 @@
     </footer>
 
     <script>
+        // Мобильное меню
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileNav.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Закрытие меню при клике на ссылку
+        document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+            });
+        });
+        
         // Логика конструктора
         const steps = {
             1: { completed: false, selected: null },
@@ -1896,70 +2253,80 @@
         const reviewsContainer = document.getElementById('reviewsContainer');
         const reviewsPrevBtn = document.getElementById('reviewsPrevBtn');
         const reviewsNextBtn = document.getElementById('reviewsNextBtn');
-        const reviewCardWidth = reviewsContainer.offsetWidth;
-        const totalReviewCards = reviewsContainer.children.length;
-        let reviewCurrentPosition = 0;
+        let reviewCurrentIndex = 0;
 
-        function scrollReviewToPosition(position) {
+        function updateCarouselButtons() {
+            if (window.innerWidth < 768) {
+                reviewsPrevBtn.style.display = 'none';
+                reviewsNextBtn.style.display = 'none';
+            } else {
+                reviewsPrevBtn.style.display = 'flex';
+                reviewsNextBtn.style.display = 'flex';
+            }
+        }
+
+        function scrollReviewToIndex(index) {
+            const cardWidth = reviewsContainer.offsetWidth;
+            const scrollAmount = index * (cardWidth + 16); // 16px gap
             reviewsContainer.scrollTo({
-                left: position,
+                left: scrollAmount,
                 behavior: 'smooth'
             });
         }
 
         reviewsPrevBtn.addEventListener('click', () => {
-            if (reviewCurrentPosition === 0) {
-                reviewCurrentPosition = (totalReviewCards - 1) * reviewCardWidth;
+            const totalCards = reviewsContainer.children.length;
+            if (reviewCurrentIndex === 0) {
+                reviewCurrentIndex = totalCards - 1;
             } else {
-                reviewCurrentPosition -= reviewCardWidth;
+                reviewCurrentIndex--;
             }
-            scrollReviewToPosition(reviewCurrentPosition);
+            scrollReviewToIndex(reviewCurrentIndex);
         });
 
         reviewsNextBtn.addEventListener('click', () => {
-            const maxPosition = (totalReviewCards - 1) * reviewCardWidth;
-            
-            if (reviewCurrentPosition >= maxPosition) {
-                reviewCurrentPosition = 0;
+            const totalCards = reviewsContainer.children.length;
+            if (reviewCurrentIndex >= totalCards - 1) {
+                reviewCurrentIndex = 0;
             } else {
-                reviewCurrentPosition += reviewCardWidth;
+                reviewCurrentIndex++;
             }
-            scrollReviewToPosition(reviewCurrentPosition);
+            scrollReviewToIndex(reviewCurrentIndex);
         });
 
         // Логика карусели результатов
         const cardsContainer = document.getElementById('cardsContainer');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
-        const cardWidth = cardsContainer.offsetWidth;
-        const totalCards = cardsContainer.children.length;
-        let currentPosition = 0;
+        let currentIndex = 0;
 
-        function scrollToPosition(position) {
+        function scrollToIndex(index) {
+            const cardWidth = cardsContainer.offsetWidth;
+            const scrollAmount = index * (cardWidth + 16); // 16px gap
             cardsContainer.scrollTo({
-                left: position,
+                left: scrollAmount,
                 behavior: 'smooth'
             });
         }
 
         prevBtn.addEventListener('click', () => {
-            if (currentPosition === 0) {
-                currentPosition = (totalCards - 1) * cardWidth;
+            const totalCards = cardsContainer.children.length;
+            if (currentIndex === 0) {
+                currentIndex = totalCards - 1;
             } else {
-                currentPosition -= cardWidth;
+                currentIndex--;
             }
-            scrollToPosition(currentPosition);
+            scrollToIndex(currentIndex);
         });
 
         nextBtn.addEventListener('click', () => {
-            const maxPosition = (totalCards - 1) * cardWidth;
-            
-            if (currentPosition >= maxPosition) {
-                currentPosition = 0;
+            const totalCards = cardsContainer.children.length;
+            if (currentIndex >= totalCards - 1) {
+                currentIndex = 0;
             } else {
-                currentPosition += cardWidth;
+                currentIndex++;
             }
-            scrollToPosition(currentPosition);
+            scrollToIndex(currentIndex);
         });
 
         // Логика FAQ
@@ -1976,6 +2343,37 @@
                 alert('Перенаправляем на страницу с деталями предложения...');
                 // window.location.href = 'ссылка_на_предложение';
             });
+        });
+
+        // Плавная прокрутка для якорных ссылок
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Обновление видимости кнопок карусели при изменении размера окна
+        window.addEventListener('resize', () => {
+            updateCarouselButtons();
+        });
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCarouselButtons();
         });
     </script>
 </body>
