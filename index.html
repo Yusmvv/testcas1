@@ -51,6 +51,10 @@
             overflow-x: hidden;
         }
         
+        body.menu-open {
+            overflow: hidden;
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -95,8 +99,8 @@
         
         /* Шапка сайта */
         .header {
-            background: rgba(10, 10, 15, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 15, 0.98);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: fixed;
             top: 0;
@@ -110,6 +114,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
         
         .logo {
@@ -147,28 +152,29 @@
             font-size: 24px;
             cursor: pointer;
             padding: 5px;
+            z-index: 1001;
         }
         
         .mobile-nav {
-            display: none;
             position: fixed;
-            top: 70px;
+            top: 0;
             left: 0;
             width: 100%;
+            height: 100vh;
             background: rgba(10, 10, 15, 0.98);
-            backdrop-filter: blur(20px);
-            padding: 20px;
+            backdrop-filter: blur(30px);
+            padding: 80px 20px 20px;
             z-index: 999;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
             flex-direction: column;
-            gap: 15px;
-            transform: translateY(-100%);
+            gap: 20px;
+            transform: translateX(100%);
             opacity: 0;
             transition: all 0.3s ease;
+            overflow-y: auto;
         }
         
         .mobile-nav.active {
-            transform: translateY(0);
+            transform: translateX(0);
             opacity: 1;
         }
         
@@ -878,30 +884,6 @@
             margin-bottom: 15px;
         }
         
-        .footer-social {
-            display: flex;
-            gap: 12px;
-        }
-        
-        .social-link {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 13px;
-        }
-        
-        .social-link:hover {
-            background: var(--gradient);
-            transform: translateY(-2px);
-        }
-        
         .footer-heading {
             font-size: 15px;
             font-weight: 600;
@@ -1254,6 +1236,10 @@
                 display: block;
             }
             
+            .mobile-nav {
+                display: flex;
+            }
+            
             .step-header {
                 flex-wrap: wrap;
             }
@@ -1453,15 +1439,6 @@
                 gap: 20px;
             }
             
-            .footer-social {
-                justify-content: center;
-            }
-            
-            .social-link {
-                width: 36px;
-                height: 36px;
-            }
-            
             .container {
                 padding: 0 15px;
             }
@@ -1534,6 +1511,10 @@
             
             .section {
                 padding: 30px 0;
+            }
+            
+            .mobile-nav {
+                padding-top: 70px;
             }
         }
         
@@ -2069,11 +2050,6 @@
                 <div class="footer-about">
                     <div class="footer-logo">CashHunter</div>
                     <p class="footer-description">Сервис поиска эксклюзивных бонусов казино. Мы анализируем рынок и находим лучшие предложения для каждого игрока.</p>
-                    <div class="footer-social">
-                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                    </div>
                 </div>
                 
                 <div class="footer-nav">
@@ -2114,12 +2090,16 @@
     </footer>
 
     <script>
-        // Мобильное меню
+        // Мобильное меню - РАБОЧИЙ ВАРИАНТ
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileNav = document.getElementById('mobileNav');
+        const body = document.body;
         
-        mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             mobileNav.classList.toggle('active');
+            body.classList.toggle('menu-open');
+            
             const icon = mobileMenuBtn.querySelector('i');
             if (mobileNav.classList.contains('active')) {
                 icon.classList.remove('fa-bars');
@@ -2134,9 +2114,32 @@
         document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 mobileNav.classList.remove('active');
+                body.classList.remove('menu-open');
                 mobileMenuBtn.querySelector('i').classList.remove('fa-times');
                 mobileMenuBtn.querySelector('i').classList.add('fa-bars');
             });
+        });
+        
+        // Закрытие меню при клике вне его
+        document.addEventListener('click', (e) => {
+            if (mobileNav.classList.contains('active') && 
+                !mobileNav.contains(e.target) && 
+                !mobileMenuBtn.contains(e.target)) {
+                mobileNav.classList.remove('active');
+                body.classList.remove('menu-open');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+            }
+        });
+        
+        // Закрытие меню при нажатии Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                body.classList.remove('menu-open');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+            }
         });
         
         // Логика конструктора
@@ -2267,7 +2270,7 @@
 
         function scrollReviewToIndex(index) {
             const cardWidth = reviewsContainer.offsetWidth;
-            const scrollAmount = index * (cardWidth + 16); // 16px gap
+            const scrollAmount = index * (cardWidth + 16);
             reviewsContainer.scrollTo({
                 left: scrollAmount,
                 behavior: 'smooth'
@@ -2302,7 +2305,7 @@
 
         function scrollToIndex(index) {
             const cardWidth = cardsContainer.offsetWidth;
-            const scrollAmount = index * (cardWidth + 16); // 16px gap
+            const scrollAmount = index * (cardWidth + 16);
             cardsContainer.scrollTo({
                 left: scrollAmount,
                 behavior: 'smooth'
@@ -2311,20 +2314,24 @@
 
         prevBtn.addEventListener('click', () => {
             const totalCards = cardsContainer.children.length;
-            if (currentIndex === 0) {
-                currentIndex = totalCards - 1;
+            const scrollStep = window.innerWidth < 768 ? 1 : 2;
+            
+            if (currentIndex <= 0) {
+                currentIndex = totalCards - scrollStep;
             } else {
-                currentIndex--;
+                currentIndex = Math.max(0, currentIndex - scrollStep);
             }
             scrollToIndex(currentIndex);
         });
 
         nextBtn.addEventListener('click', () => {
             const totalCards = cardsContainer.children.length;
-            if (currentIndex >= totalCards - 1) {
+            const scrollStep = window.innerWidth < 768 ? 1 : 2;
+            
+            if (currentIndex >= totalCards - scrollStep) {
                 currentIndex = 0;
             } else {
-                currentIndex++;
+                currentIndex = Math.min(totalCards - scrollStep, currentIndex + scrollStep);
             }
             scrollToIndex(currentIndex);
         });
@@ -2341,7 +2348,6 @@
         document.querySelectorAll('.card-button').forEach(button => {
             button.addEventListener('click', function() {
                 alert('Перенаправляем на страницу с деталями предложения...');
-                // window.location.href = 'ссылка_на_предложение';
             });
         });
 
